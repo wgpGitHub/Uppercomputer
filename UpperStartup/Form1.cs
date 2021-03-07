@@ -32,7 +32,14 @@ namespace UpperStartup
 
         private void 输出_Click(object sender, EventArgs e)
         {
-            串口.Write("电流" + 转向.Text + "电压" + 电压输出.Text + "完");
+            if (转向.Text == "正")
+            {
+                串口.Write("T" + "P" + "V" + 电压输出.Text + "/r/n");
+            }
+            else if (转向.Text == "反")
+            {
+                串口.Write("T" + "R" + "V" + 电压输出.Text + "/r/n");
+            }
         }
 
         private void 获取_Click(object sender, EventArgs e)
@@ -46,10 +53,10 @@ namespace UpperStartup
             var 总字符串 = 串口.Read(buffer, 0, buffer.Length).ToString();
 
             //数据归位
-            电流显示.Text = Service.截取字符串(总字符串, "电流", "电压");
-            电压显示.Text = Service.截取字符串(总字符串, "电压", "力");
-            力显示.Text = Service.截取字符串(总字符串, "力", "位移");
-            位移显示.Text = Service.截取字符串(总字符串, "位移", "完");
+            电流显示.Text = Service.截取字符串(总字符串, "I", "V");
+            电压显示.Text = Service.截取字符串(总字符串, "V", "F");
+            力显示.Text = Service.截取字符串(总字符串, "F", "X");
+            位移显示.Text = Service.截取字符串(总字符串, "X", "/r/n");
         }
 
         private void 清空_Click(object sender, EventArgs e)
